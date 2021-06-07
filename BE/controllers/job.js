@@ -1,4 +1,3 @@
-const { response } = require('express')
 const createError = require('http-errors')
 
 const Job = require('../model/job')
@@ -84,7 +83,6 @@ exports.deleteJobById = async (req, res, next) => {
   }
 }
 
-// /jobs/search?value=awekfahw&category=awjhefkajh
 exports.searchJob = async (req, res, next) => {
   const { searchValue, category } = req.query
 
@@ -121,6 +119,18 @@ exports.getAppliedJobByUserId = async (req, res, next) => {
 }
 
 exports.getUserApplied = async (req, res, next) => {
+  const { id: idUser } = req.user
+
+  try {
+    const [users] = await Job.getAppliedJobByUserId(idUser)
+
+    res.json({ users })
+  } catch (e) {
+    next(e)
+  }
+}
+
+exports.getUserAppliedByJobId = async (req, res, next) => {
   const { idJob } = req.params
 
   try {

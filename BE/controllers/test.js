@@ -1,48 +1,49 @@
-const createError = require('http-errors');
-const bcrypt = require('bcryptjs');
+//Controller for sign up
+const createError = require('http-errors')
+const bcrypt = require('bcryptjs')
 
-const Test = require('../model/test');
+const Test = require('../model/test')
 
 exports.postSignup = async (req, res, next) => {
-	const { username, password } = req.body;
+  const { username, password } = req.body
 
-	try {
-		const [existedUser] = await Test.findByUsername(username);
+  try {
+    const [existedUser] = await Test.findByUsername(username)
 
-		if (existedUser.length) {
-			return next(createError(401, 'This username already exist'));
-		}
+    if (existedUser.length) {
+      return next(createError(401, 'This username already exist'))
+    }
 
-		const encodePass = bcrypt.hashSync(password, 12);
+    const encodePass = bcrypt.hashSync(password, 12)
 
-		const user = new Test(username, encodePass);
+    const user = new Test(username, encodePass)
 
-		await user.save();
+    await user.save()
 
-		res.json({ user });
-	} catch (e) {
-		next(e);
-	}
-};
+    res.json({ user })
+  } catch (e) {
+    next(e)
+  }
+}
 
 exports.postLogin = async (req, res, next) => {
-	const { username, password } = req.body;
+  const { username, password } = req.body
 
-	try {
-		const [user] = await Test.findByUsername(username);
+  try {
+    const [user] = await Test.findByUsername(username)
 
-		if (!user.length) {
-			return next(createError(401, 'Wrong username/password!'));
-		}
+    if (!user.length) {
+      return next(createError(401, 'Wrong username/password!'))
+    }
 
-		const isMatch = bcrypt.compareSync(password, user[0].password);
+    const isMatch = bcrypt.compareSync(password, user[0].password)
 
-		if (!isMatch) {
-			return next(createError(401, 'Wrong username/password!'));
-		}
+    if (!isMatch) {
+      return next(createError(401, 'Wrong username/password!'))
+    }
 
-		res.json({ user: user[0] });
-	} catch (e) {
-		next(e);
-	}
-};
+    res.json({ user: user[0] })
+  } catch (e) {
+    next(e)
+  }
+}

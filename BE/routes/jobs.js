@@ -1,35 +1,31 @@
-const router = require('express').Router();
+const router = require('express').Router()
 
-const jobController = require('../controllers/job');
-const { verifyToken } = require('../middleware/jwt');
+const jobController = require('../controllers/job')
+const { verifyToken } = require('../middleware/jwt')
 
-router.use(verifyToken);
+router.use(verifyToken)
 
-// /jobs/
-router.get('/', jobController.getJobs);
+router.get('/', jobController.getJobs)
 
-// router.get('/lastest-job')
+router.get('/search', jobController.searchJob)
 
-router.get('/search', jobController.searchJob);
+router.get('/applied-jobs', jobController.getUserApplied)
 
-router.get('/applied-jobs/:id', jobController.getAppliedJobByUserId);
+router.get('/applied-jobs/:id', jobController.getAppliedJobByUserId)
 
 router.get(
-	'/user-applied-job/:idJob',
-	/*checkAdminRole,*/ jobController.getUserApplied,
-);
+  '/user-applied-job/:idJob',
+  /*checkAdminRole,*/ jobController.getUserAppliedByJobId
+)
 
-router.get('/:id', jobController.getJobById);
+router.get('/:id', jobController.getJobById)
 
-router.put('/:id', jobController.putJobById);
+router.put('/:id', jobController.putJobById)
 
-router.delete('/:id', jobController.deleteJobById);
+router.delete('/:id', jobController.deleteJobById)
 
-router.post('/new-job', jobController.postJob);
+router.post('/new-job', jobController.postJob)
 
-router.post('/apply-job/:id', jobController.postApplyJob);
+router.post('/apply-job/:id', jobController.postApplyJob)
 
-// /job/all-jobs
-// router.get('/all-jobs')
-
-module.exports = router;
+module.exports = router
