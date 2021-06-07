@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Form, Modal, Button } from 'react-bootstrap'
 
 import axios from '../../share/baseAxios'
+import './EditJob.css'
 
 export default function EditJob(props) {
   const [error, setError] = useState(null)
@@ -42,10 +43,13 @@ export default function EditJob(props) {
   const onSubmit = e => {
     e.preventDefault()
 
+    const id = props.match.params.id
+
     axios
-      .put(`/jobs/${props.match.params.id}`, job)
+      .put(`/jobs/${id}`, job)
       .then(res => {
         console.log(res)
+        props.history.push(`/job/${id}`) //Redirect to job detail
       })
       .catch(error => {
         console.log(error)
@@ -94,6 +98,7 @@ export default function EditJob(props) {
             name="description"
             onChange={onChange}
             as="textarea"
+            rows={5}
             placeholder="Enter description"
           />
         </Form.Group>
@@ -104,7 +109,7 @@ export default function EditJob(props) {
 
       <Modal show={Boolean(error)} onHide={() => setError(null)}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Warning !!!</Modal.Title>
         </Modal.Header>
         <Modal.Body>{error}</Modal.Body>
       </Modal>

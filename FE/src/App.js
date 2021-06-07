@@ -12,10 +12,7 @@ import Job from './pages/Job/Job'
 import Login from './pages/Login/Login'
 import { routes } from './share/constant'
 
-// 402
-
 function App() {
-  // redux -> user
   const [user, setUser] = useState(null)
 
   const logout = () => {
@@ -82,7 +79,5 @@ function App() {
     </div>
   )
 }
-
-//JSX -> XML JS
 
 export default App

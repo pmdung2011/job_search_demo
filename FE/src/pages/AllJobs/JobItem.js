@@ -6,8 +6,6 @@ import axios from '../../share/baseAxios'
 
 export default function JobItem(props) {
   const [show, setShow] = useState(false)
-  // props.job props.name
-  // params
   const deleteJob = () => {
     // call api
     axios
@@ -39,7 +37,7 @@ export default function JobItem(props) {
         <h3>Location: {props.job.location}</h3>
         <h3>Description: {props.job.description}</h3>
 
-        {props.user.role === 'ADMIN' && (
+        {!!props.user && props.user.role === 'ADMIN' && (
           <React.Fragment>
             <Link to={`/job/edit/${props.job.id}`}>
               <Button variant="success">Edit</Button>

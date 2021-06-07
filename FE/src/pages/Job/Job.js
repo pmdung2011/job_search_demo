@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Table, Button, Modal, Form } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 import axios from '../../share/baseAxios'
 import './Job.css'
@@ -12,7 +13,7 @@ export default function Job(props) {
     email: '',
     description: '',
   })
-  const [usersApplied, setUsersApplied] = useState([]) // { name:"Loc"} object [] array
+  const [usersApplied, setUsersApplied] = useState([])
 
   useEffect(() => {
     const id = props.match.params.id
@@ -97,11 +98,17 @@ export default function Job(props) {
         Apply Job
       </Button>
 
+      {props.user.role === 'ADMIN' && (
+        <Link to={`/job/edit/${props.match.params.id}`}>
+          <Button>Edit</Button>
+        </Link>
+      )}
+
       {props.user.role === 'ADMIN' && <h2>{usersApplied.length} applied!</h2>}
 
       {props.user.role === 'ADMIN' &&
-        usersApplied.map(user => {
-          return <h3 key={user.id}>{user.username}</h3>
+        usersApplied.map((user, index) => {
+          return <h3 key={index}>{user.username}</h3>
         })}
 
       <Modal show={show} onHide={handleClose}>
