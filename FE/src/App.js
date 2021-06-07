@@ -23,7 +23,7 @@ function App() {
 
   useEffect(() => {
     setUser(() => {
-      const user = localStorage.getItem('user')
+      const user = localStorage.getItem('user') //store user_id, user_role into local storage
 
       if (!user) return null
       return JSON.parse(user)

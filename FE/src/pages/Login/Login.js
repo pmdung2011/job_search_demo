@@ -15,8 +15,8 @@ export default function Login(props) {
     axios
       .post('/auth/login', form)
       .then(response => {
-        localStorage.setItem('user', JSON.stringify(response.data.user))
-        localStorage.setItem('token', response.data.token)
+        localStorage.setItem('user', JSON.stringify(response.data.user)) //convert from JSON to string to store in local storage
+        localStorage.setItem('token', response.data.token) //Store received token in local storage
         props.setUser(response.data.user)
       })
       .catch(console.log)
@@ -28,6 +28,7 @@ export default function Login(props) {
     })
   }
 
+  //If user is logged in, redirect to all-jobs page
   if (props.user) {
     return <Redirect to={routes.ALL_JOBS} />
   }
