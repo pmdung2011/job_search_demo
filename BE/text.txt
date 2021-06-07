@@ -1,0 +1,11 @@
+SQL_SERVER=freedb.tech
+SQL_USERNAME=freedbtech_horosrubik
+SQL_PASSWORD=7YqEuznZUhR!mpy
+DATABASE=freedbtech_searchjob
+DATABASE_PORT=3306
+
+SQL_SERVER=presidio.database.windows.net
+SQL_USERNAME=dannysa
+SQL_PASSWORD=P@ssw0rd2011
+DATABASE=jobsearch
+DATABASE_PORT=3306

@@ -1,0 +1,31 @@
+.header {
+  height: 60px;
+  width: 100%;
+  background-color: khaki;
+  padding: 0 60px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header ul {
+  margin: 0;
+  padding: 12px 0;
+}
+
+.header ul li {
+  display: inline-block;
+}
+
+.header a {
+  font-size: 24px;
+  padding: 0px 24px;
+  text-decoration: none;
+}
+
+.header a.active {
+  text-decoration: underline;
+}
+
+.header .logout-btn {
+  margin: auto 0;
+}
