@@ -13,7 +13,7 @@ exports.postLogin = async (req, res, next) => {
     next(CreateError(404, 'User not found!'))
   }
 
-  const { password: userPassword, ...user } = result[0]
+  const { password: userPassword, ...user } = result[0] //remove password part from response data
 
   // Create a new token with the username in the payload
   // and which expires 3 days after issue

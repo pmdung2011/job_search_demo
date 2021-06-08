@@ -7,6 +7,7 @@ import './Job.css'
 
 export default function Job(props) {
   const [show, setShow] = useState(false)
+  const [showSuccess, setShowSuccess] = useState(false)
   const [job, setJob] = useState({})
   const [isApplied, setIsApplied] = useState(false)
   const [form, setForm] = useState({
@@ -17,9 +18,8 @@ export default function Job(props) {
 
   useEffect(() => {
     const id = props.match.params.id
-    //falsy
     axios
-      .get(`/jobs/${id}?checkIsApplied=true`)
+      .get(`/jobs/${id}?checkIsApplied=true`) //check if the job is applied by user
       .then(res => {
         setJob(res.data.job[0])
         setIsApplied(res.data.isApplied)
@@ -51,6 +51,7 @@ export default function Job(props) {
       .then(res => {
         console.log('🚀 ~ file: Job.js ~ line 38 ~ .then ~ res', res)
         setIsApplied(true)
+        setShowSuccess(true)
       })
       .catch(console.log)
       .finally(() => {
@@ -94,23 +95,41 @@ export default function Job(props) {
         </tbody>
       </Table>
 
-      <Button variant="info" onClick={handleOpen} disabled={isApplied}>
-        Apply Job
-      </Button>
-
-      {props.user.role === 'ADMIN' && (
-        <Link to={`/job/edit/${props.match.params.id}`}>
-          <Button>Edit</Button>
-        </Link>
-      )}
+      <div>
+        <Button variant="info" onClick={handleOpen} disabled={isApplied}>
+          Apply Job
+        </Button>{' '}
+        {props.user.role === 'ADMIN' && (
+          <Link to={`/job/edit/${props.match.params.id}`}>
+            <Button>Edit</Button>
+          </Link>
+        )}
+      </div>
 
       {props.user.role === 'ADMIN' && <h2>{usersApplied.length} applied!</h2>}
 
+      {/* Show user applied for the job */}
       {props.user.role === 'ADMIN' &&
         usersApplied.map((user, index) => {
-          return <h3 key={index}>{user.username}</h3>
+          return (
+            <Table striped bordered hover variant="dark">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Username</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{index + 1}</td>
+                  <td>{user.username}</td>
+                </tr>
+              </tbody>
+            </Table>
+          )
         })}
 
+      {/* Form to input info when applying for the job */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
@@ -129,7 +148,7 @@ export default function Job(props) {
             </Form.Group>
 
             <Form.Group controlId="formBasicPassword">
-              <Form.Label>Description</Form.Label>
+              <Form.Label>Experience</Form.Label>
               <Form.Control
                 name="description"
                 value={form.description}
@@ -141,12 +160,31 @@ export default function Job(props) {
             </Form.Group>
           </Form>
         </Modal.Body>
+
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
           <Button variant="primary" onClick={submitForm}>
             Apply job
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal showing result after applied */}
+      <Modal
+        show={showSuccess}
+        onHide={() => setShowSuccess(false)}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Modal title</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Applied Successfully !</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowSuccess(false)}>
+            Close
           </Button>
         </Modal.Footer>
       </Modal>

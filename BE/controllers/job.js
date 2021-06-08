@@ -30,7 +30,7 @@ exports.getJobs = async (req, res, next) => {
 
 exports.getJobById = async (req, res, next) => {
   const { id } = req.params
-  const { id: userId } = req.user
+  const { id: userId } = req.user //User is set by verifyToken
   const { checkIsApplied } = req.query
 
   try {

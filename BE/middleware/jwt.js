@@ -7,7 +7,7 @@ exports.verifyToken = (req, res, next) => {
     const token = req.get('Authorization').split(' ')[1]
 
     const decodeToken = jwt.verify(token, process.env.JWT_SECRET_KEY)
-    console.log(decodeToken)
+    console.log('decodeToken: ', decodeToken)
     req.user = decodeToken
 
     next()
