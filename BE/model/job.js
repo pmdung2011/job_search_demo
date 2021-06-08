@@ -87,12 +87,13 @@ module.exports = class Job {
   static applyJob(idUser, idJob) {
     return Database.execute(
       `
-      INSERT INTO applied_job 
-      (id, id_user, id_job) 
-      VALUES 
-      (NULL, ?, ?)
+      INSERT INTO applied_job (id_user, id_job)
+      SELECT * FROM (SELECT ? AS id_user, ? AS id_job) AS tmp
+      WHERE NOT EXISTS (
+          SELECT id FROM applied_job WHERE id_user = ? AND id_job = ?
+      ) LIMIT 1     
     `,
-      [idUser, idJob]
+      [idUser, idJob, idUser, idJob]
     )
   }
 

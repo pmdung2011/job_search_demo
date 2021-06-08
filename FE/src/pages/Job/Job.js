@@ -26,6 +26,12 @@ export default function Job(props) {
       })
       .catch(console.log)
 
+    fetchUserApplied(id)
+  }, [props.match.params.id, props.user.role])
+  // chỗ này nó chỉ warning là thiếu dependencies fetchUserApplied, anh đừng thêm vào nhé
+  // có cách fix cái warning đó nhưng mà giờ thêm vào hơi khó hiểu đó
+
+  const fetchUserApplied = id => {
     if (props.user.role === 'ADMIN') {
       axios
         .get(`/jobs/user-applied-job/${id}`)
@@ -34,7 +40,7 @@ export default function Job(props) {
         })
         .catch(console.log)
     }
-  }, [props.match.params.id, props.user.role])
+  }
 
   const handleClose = () => {
     setShow(false)
@@ -52,6 +58,7 @@ export default function Job(props) {
         console.log('🚀 ~ file: Job.js ~ line 38 ~ .then ~ res', res)
         setIsApplied(true)
         setShowSuccess(true)
+        fetchUserApplied(id)
       })
       .catch(console.log)
       .finally(() => {
@@ -96,38 +103,45 @@ export default function Job(props) {
       </Table>
 
       <div>
-        <Button variant="info" onClick={handleOpen} disabled={isApplied}>
-          Apply Job
+        <Button
+          variant={isApplied ? 'danger' : 'info'}
+          onClick={handleOpen}
+          disabled={isApplied}
+        >
+          {isApplied ? 'Applied' : 'Apply job'}
         </Button>{' '}
+        {/* Check role of user before display edit button */}
         {props.user.role === 'ADMIN' && (
           <Link to={`/job/edit/${props.match.params.id}`}>
             <Button>Edit</Button>
           </Link>
         )}
       </div>
-
+      {/* Show the total number of user applied for the job */}
       {props.user.role === 'ADMIN' && <h2>{usersApplied.length} applied!</h2>}
 
       {/* Show user applied for the job */}
-      {props.user.role === 'ADMIN' &&
-        usersApplied.map((user, index) => {
-          return (
-            <Table striped bordered hover variant="dark">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Username</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{index + 1}</td>
-                  <td>{user.username}</td>
-                </tr>
-              </tbody>
-            </Table>
-          )
-        })}
+      {props.user.role === 'ADMIN' && (
+        <Table striped bordered hover variant="dark">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Username</th>
+            </tr>
+          </thead>
+          <tbody>
+            {props.user.role === 'ADMIN' &&
+              usersApplied.map((user, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{user.username}</td>
+                  </tr>
+                )
+              })}
+          </tbody>
+        </Table>
+      )}
 
       {/* Form to input info when applying for the job */}
       <Modal show={show} onHide={handleClose}>

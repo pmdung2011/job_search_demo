@@ -103,6 +103,7 @@ exports.postApplyJob = async (req, res, next) => {
     await Job.applyJob(idUser, idJob)
     res.json('ok')
   } catch (e) {
+    console.log(e)
     return next(e)
   }
 }
