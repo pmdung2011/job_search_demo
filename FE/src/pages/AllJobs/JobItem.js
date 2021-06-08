@@ -42,7 +42,8 @@ export default function JobItem(props) {
             <Link to={`/job/edit/${props.job.id}`}>
               <Button variant="success">Edit</Button>
             </Link>
-            <Button variant="danger" onClick={handleOpen}>
+
+            <Button className="mx-2" variant="danger" onClick={handleOpen}>
               Delete
             </Button>
           </React.Fragment>
@@ -52,7 +53,7 @@ export default function JobItem(props) {
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Deleting the job ?</Modal.Body>
+        <Modal.Body>Delete the job ?</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close

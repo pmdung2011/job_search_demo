@@ -3,6 +3,7 @@ import { Table, Button, Modal, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 import axios from '../../share/baseAxios'
+import { roles } from '../../share/constant'
 import './Job.css'
 
 export default function Job(props) {
@@ -29,8 +30,9 @@ export default function Job(props) {
     fetchUserApplied(id)
   }, [props.match.params.id, props.user.role])
 
+  //Keep updating the number of user applied
   const fetchUserApplied = id => {
-    if (props.user.role === 'ADMIN') {
+    if (props.user.role === roles.ADMIN) {
       axios
         .get(`/jobs/user-applied-job/${id}`)
         .then(res => {
@@ -102,24 +104,27 @@ export default function Job(props) {
 
       <div>
         <Button
+          className="mx-2"
           variant={isApplied ? 'danger' : 'info'}
           onClick={handleOpen}
           disabled={isApplied}
         >
           {isApplied ? 'Applied' : 'Apply job'}
-        </Button>{' '}
+        </Button>
         {/* Check role of user before display edit button */}
-        {props.user.role === 'ADMIN' && (
+        {props.user.role === roles.ADMIN && (
           <Link to={`/job/edit/${props.match.params.id}`}>
             <Button>Edit</Button>
           </Link>
         )}
       </div>
       {/* Show the total number of user applied for the job */}
-      {props.user.role === 'ADMIN' && <h2>{usersApplied.length} applied!</h2>}
+      {props.user.role === roles.ADMIN && (
+        <h2>{usersApplied.length} applied!</h2>
+      )}
 
       {/* Show user applied for the job */}
-      {props.user.role === 'ADMIN' && (
+      {props.user.role === roles.ADMIN && (
         <Table striped bordered hover variant="dark">
           <thead>
             <tr>
@@ -128,7 +133,7 @@ export default function Job(props) {
             </tr>
           </thead>
           <tbody>
-            {props.user.role === 'ADMIN' &&
+            {props.user.role === roles.ADMIN &&
               usersApplied.map((user, index) => {
                 return (
                   <tr key={index}>

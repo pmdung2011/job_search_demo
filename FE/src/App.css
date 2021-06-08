@@ -1,1 +1,5 @@
 /* @import 'bootstrap/dist/css/bootstrap.min.css'; */
+.page{
+    max-width: 680px;
+    margin: auto
+}

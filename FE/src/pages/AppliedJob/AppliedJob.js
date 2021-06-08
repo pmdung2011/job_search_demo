@@ -16,7 +16,7 @@ export default function AppliedJob(props) {
       .catch(console.log)
   }, []) //[] run one time after rendered 1st time
   return (
-    <div>
+    <div className="page">
       <h1>Applied Job page</h1>
       {jobs.map(job => {
         return <JobItem key={job.title} job={job} name={job.name} />
