@@ -1,7 +1,7 @@
 const router = require('express').Router()
 
 const jobController = require('../controllers/job')
-const { verifyToken } = require('../middleware/jwt')
+const { verifyToken, checkAdminRole } = require('../middleware/jwt')
 
 router.use(verifyToken)
 
@@ -15,16 +15,17 @@ router.get('/applied-jobs/:id', jobController.getAppliedJobByUserId)
 
 router.get(
   '/user-applied-job/:idJob',
-  /*checkAdminRole,*/ jobController.getUserAppliedByJobId
+  checkAdminRole,
+  jobController.getUserAppliedByJobId
 )
 
 router.get('/:id', jobController.getJobById)
 
-router.put('/:id', jobController.putJobById)
+router.put('/:id', checkAdminRole, jobController.putJobById)
 
-router.delete('/:id', jobController.deleteJobById)
+router.delete('/:id', checkAdminRole, jobController.deleteJobById)
 
-router.post('/new-job', jobController.postJob)
+router.post('/new-job', checkAdminRole, jobController.postJob)
 
 router.post('/apply-job/:id', jobController.postApplyJob)
 

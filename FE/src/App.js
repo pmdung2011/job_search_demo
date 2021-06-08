@@ -25,6 +25,7 @@ function App() {
     setUser(() => {
       const user = localStorage.getItem('user') //store user_id, user_role into local storage
 
+      //CHeck if user logged in, no need to login again
       if (!user) return null
       return JSON.parse(user)
     })

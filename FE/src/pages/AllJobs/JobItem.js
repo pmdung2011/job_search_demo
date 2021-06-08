@@ -11,7 +11,7 @@ export default function JobItem(props) {
     axios
       .delete(`/jobs/${props.job.id}`)
       .then(res => {
-        props.deleteJob(props.job.id)
+        props.deleteJob(props.job.id) //Delete job on front-end
       })
       .catch(console.log)
   }

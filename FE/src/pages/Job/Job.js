@@ -28,8 +28,6 @@ export default function Job(props) {
 
     fetchUserApplied(id)
   }, [props.match.params.id, props.user.role])
-  // chỗ này nó chỉ warning là thiếu dependencies fetchUserApplied, anh đừng thêm vào nhé
-  // có cách fix cái warning đó nhưng mà giờ thêm vào hơi khó hiểu đó
 
   const fetchUserApplied = id => {
     if (props.user.role === 'ADMIN') {
