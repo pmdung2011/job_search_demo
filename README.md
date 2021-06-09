@@ -1,8 +1,8 @@
 # Job_Search
 
-A simple Web Application where end-user can search and apply for jobs. Admin can edit/add new jobs.
-Front-end: ReactJS, React-Bootstrap
-Back-end: NodeJS, Express, JavaScript
+A simple Web Application where end-user can search and apply for jobs. Admin can edit/add new jobs. <br/>
+Front-end: ReactJS, React-Bootstrap <br/>
+Back-end: NodeJS, Express, JavaScript<br/>
 Database: MySQL (https://freedb.tech/)
 
 ## Getting Started
